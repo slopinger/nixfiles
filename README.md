@@ -3,6 +3,15 @@
 NixOS configuration for the freifick.net server, written out from what is deployed on the
 current Arch Linux install. Structure follows [emily's nixfiles](https://woof.rip/emily/nixfiles).
 
+## Coverage of this snapshot
+
+The live server still runs Arch Linux. This NixOS snapshot predates the trough fediverse service,
+dn42 routing and the verified trough/slopd backup timer added on 2026-10-14; those services are not
+yet represented by modules here. Do not treat this configuration as a complete replacement for the
+current host until they are carried over. The MCP projects run per-user with uv rather than as
+public services. Operational facts live in `/home/slop/CLAUDE.md` (`AGENTS.md` is its symlink).
+Keep this README and those notes current as services and deployment procedures change.
+
 What it describes:
 
 - **Host `arch`**: Proxmox/QEMU VM, UEFI + systemd-boot, ext4 root on `/dev/sda` (disko layout keeps
@@ -51,7 +60,10 @@ $ nix run github:nix-community/nixos-anywhere -- --flake ".#arch" root@<target-h
 
 nixos-anywhere repartitions with `disko.nix`. To keep the data, back up first: `/srv/gitlab`
 (including `config/gitlab-secrets.json`), `/var/lib/slopd`, `/var/lib/caddy` (certificates) and
-`/etc/ssh/ssh_host_*`, and restore them before starting the services.
+`/etc/ssh/ssh_host_*`, and restore them before starting the services. Also preserve the newer
+`/var/lib/trough` (DB + uploads, host fixed as `fedi.freifick.net`), `/etc/trough.env`,
+`/srv/backups/slop-services`, and the dn42/WireGuard configuration and private keys. Those newer
+services must first be implemented in this flake; storing their data alone does not enable them.
 
 ## Structure
 ```
