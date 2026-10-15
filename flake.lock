@@ -131,11 +131,11 @@
     "slop-landing": {
       "flake": false,
       "locked": {
-        "lastModified": 1791995193,
-        "narHash": "sha256-3U1/uN3tSO//6l4+wShBL9ZJchRoAYCDAMbMWClkgE8=",
+        "lastModified": 1792047927,
+        "narHash": "sha256-pXKNXUucsH/U5OAz38DJkdD1zwPvbnuwm6uYiktdHOA=",
         "ref": "refs/heads/main",
-        "rev": "423bbd99ad1219931a85abb1edd71513cb0fe842",
-        "revCount": 7,
+        "rev": "c879270feb056a774b237e32022ec216dbda8298",
+        "revCount": 31,
         "type": "git",
         "url": "https://git.freifick.net/slop/slop-landing.git"
       },
