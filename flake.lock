@@ -151,11 +151,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792052007,
-        "narHash": "sha256-lx9tDIL0G2OFbGEGWUMpSteyyzusx8Ku6VVs+7duNog=",
+        "lastModified": 1792052244,
+        "narHash": "sha256-swGkwtrcURGsnEMR4KDaTX9XR+VWt40k918TpvaDy2c=",
         "ref": "refs/heads/main",
-        "rev": "c75b177b3954cfe7d718c2aed182e1e2ee1a08f7",
-        "revCount": 8,
+        "rev": "a337a6ed82caf566133eabf4c71f5cabd4d1e134",
+        "revCount": 11,
         "type": "git",
         "url": "https://git.freifick.net/slop/mayfly.git"
       },
@@ -345,11 +345,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792052061,
-        "narHash": "sha256-yPlA2Fp1lNMRN6x9EYrDK3XdxqoT15EC4eGG/Q7N8zk=",
+        "lastModified": 1792052246,
+        "narHash": "sha256-8CrN9qcftM4ELWo8NCw+j8QHuMRwUBUrj6BoJEvA1Uo=",
         "ref": "refs/heads/main",
-        "rev": "22f1b75016ff92a2677888ce1e22bb5eb2cc0bf9",
-        "revCount": 38,
+        "rev": "b2142bb9d0cc6cc9a4850f1951a0646ce4ee637e",
+        "revCount": 39,
         "type": "git",
         "url": "https://git.freifick.net/slop/slop-landing.git"
       },
