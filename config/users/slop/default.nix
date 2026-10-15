@@ -21,6 +21,7 @@
     "claude-code"
   ];
 
+  home-manager.backupFileExtension = "before-nixos";
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.slop = {

@@ -7,11 +7,14 @@
     ../../profiles/qemu.nix
     ../../services/freifick-net.nix
     ../../services/gitlab.nix
+    ../../services/current-services.nix
     ./disko.nix
     ./hardware-configuration.nix
   ];
 
-  networking.hostName = "arch";
+  networking.hostName = "slop";
+  networking.domain = "kyouma.net";
+  networking.firewall.enable = false;
   freifick.deployment.targetHost = "freifick.net";
 
   # Arch's `linux` package tracks the latest stable kernel.

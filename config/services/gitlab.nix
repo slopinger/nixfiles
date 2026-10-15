@@ -12,6 +12,24 @@ in {
     ./docker.nix
   ];
 
+  # Import the preserved image on first boot without depending on registry access.
+  systemd.services.gitlab-image-import = {
+    requires = [ "docker.service" ];
+    after = [ "docker.service" ];
+    before = [ "docker-gitlab.service" ];
+    serviceConfig.Type = "oneshot";
+    path = [ config.virtualisation.docker.package ];
+    script = ''
+      if ! docker image inspect gitlab/gitlab-ce:19.4.2-ce.0 >/dev/null 2>&1; then
+        docker load --input /root/arch-migration/gitlab-image.tar
+      fi
+    '';
+  };
+  systemd.services.docker-gitlab = {
+    requires = [ "gitlab-image-import.service" ];
+    after = [ "gitlab-image-import.service" ];
+  };
+
   networking.firewall.allowedTCPPorts = [ 2222 ];
 
   virtualisation.oci-containers.containers.gitlab = {

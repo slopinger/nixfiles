@@ -4,8 +4,9 @@ Follow `/home/slop/CLAUDE.md`; keep this file and README current. AGENTS.md link
 Every software project needs a locked Nix flake and applicable reusable NixOS module.
 Never add Co-Authored-By trailers or session links to public GitLab content.
 
-- This is an infrastructure snapshot; the live host still runs Arch. Do not deploy or
-  repartition it as part of packaging work. README lists host migration gaps.
+- Migration to the dedicated `/dev/sdb` disk is explicitly authorized. The running
+  Arch disk `/dev/sda` must remain intact. Host flake attribute stays `arch`; its
+  network identity is now `slop.kyouma.net`. See README for migration status.
 - Application flakes own their packages/modules. This flake pins public GitLab inputs,
   exposes packages through the overlay, and reexports their NixOS modules. Update input
   locks when changing application revisions; do not maintain duplicate application builds.
