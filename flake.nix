@@ -24,7 +24,11 @@
 
     nixosModules = lib.genAttrs
       (builtins.attrNames (lib.filterAttrs (_: v: v == "directory") (builtins.readDir ./modules)))
-      (mod: ./modules/${mod});
+      (mod: ./modules/${mod}) // lib.genAttrs
+      [ "trough" "mayfly" "dn42" "driftline" "server-backups" ]
+      (name: inputs.${name}.nixosModules.default) // {
+        slopd = inputs.slop-landing.nixosModules.default;
+      };
 
     packages = sf.eachSystem (system: platform: let
       pkgs = sf.importPkgs system;
@@ -57,10 +61,38 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    trough = {
+      url = "git+https://git.freifick.net/slop/trough.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mayfly = {
+      url = "git+https://git.freifick.net/slop/mayfly.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dn42 = {
+      url = "git+https://git.freifick.net/slop/dn42.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    driftline = {
+      url = "git+https://git.freifick.net/slop/driftline.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    server-backups = {
+      url = "git+https://git.freifick.net/slop/server-backups.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    therapie-mcp = {
+      url = "git+https://git.freifick.net/slop/therapie-mcp.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    arbeitsagentur-mcp = {
+      url = "git+https://git.freifick.net/slop/arbeitsagentur-mcp.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # freifick.net static site + slopd (guestbook/counter backend)
     slop-landing = {
       url = "git+https://git.freifick.net/slop/slop-landing.git";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }

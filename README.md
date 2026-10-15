@@ -7,7 +7,9 @@ current Arch Linux install. Structure follows [emily's nixfiles](https://woof.ri
 
 The live server still runs Arch Linux. This NixOS snapshot predates the trough fediverse service,
 dn42 routing and the verified trough/slopd backup timer added on 2026-10-14; those services are not
-yet represented by modules here. Do not treat this configuration as a complete replacement for the
+yet enabled in the host configuration. Their project-owned modules are now reexported
+by this flake; importing/enabling them and migrating runtime configuration is a separate
+host migration task. Do not treat this configuration as a complete replacement for the
 current host until they are carried over. The MCP projects run per-user with uv rather than as
 public services. Operational facts live in `/home/slop/CLAUDE.md` (`AGENTS.md` is its symlink).
 Keep this README and those notes current as services and deployment procedures change.
@@ -63,7 +65,7 @@ nixos-anywhere repartitions with `disko.nix`. To keep the data, back up first: `
 `/etc/ssh/ssh_host_*`, and restore them before starting the services. Also preserve the newer
 `/var/lib/trough` (DB + uploads, host fixed as `fedi.freifick.net`), `/etc/trough.env`,
 `/srv/backups/slop-services`, and the dn42/WireGuard configuration and private keys. Those newer
-services must first be implemented in this flake; storing their data alone does not enable them.
+services must first be enabled and configured in the host; storing their data alone does not enable them.
 
 ## Structure
 ```
@@ -78,3 +80,30 @@ nixfiles
 ├── modules             # NixOS modules
 └── pkgs                # nixpkgs overlay
 ```
+
+## Project packaging
+
+All eight application/tool projects have their own locked Nix flakes. This
+infrastructure flake pins their public GitLab revisions and consumes their
+packages directly; slopd and the site no longer have duplicate build recipes.
+The overlay/package outputs expose `slop-landing`, `slopd`, `trough`, `mayfly`,
+`dn42`, `driftline`, `server-backups`, `therapie-mcp` and `arbeitsagentur-mcp`.
+For the runtime executable name and options, see each project's README.
+
+Reusable NixOS modules are exported as `nixosModules.slopd`, `.trough`, `.mayfly`,
+`.dn42`, `.driftline` and `.server-backups`. The existing `slopd` namespace is
+`freifick.slopd`; the others use the options documented in their source projects.
+The MCP servers are per-user stdio tools and do not expose public services.
+Reexporting a module does not enable it on `arch`.
+
+To update an application pin, run `nix flake update <input-name>` and commit
+`flake.lock`. Evaluate with `nix flake check --no-build`, then build affected
+packages, for example `nix build .#trough .#therapie-mcp`. Application suites
+run via `nix flake check` in their own source projects. Never add secrets or
+session links to this public repository, or co-author trailers to commits.
+
+Validation on 2026-10-15: the full x86_64 NixOS host check built successfully,
+all application package outputs built through this flake, and the six exported
+modules evaluated together with no failed assertions. Application checks include
+Go tests, offline MCP tests, Gleam/HTTP checks, backup fixtures and Node tests.
+This verifies builds/configuration; the host snapshot has not been deployed.
