@@ -56,7 +56,7 @@
       settings = {
         user = {
           name = "slop";
-          email = "slop@freifick.net";
+          email = "slopmoder@tutamail.com";
         };
         gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
         tag.gpgSign = true;
@@ -66,7 +66,7 @@
       };
     };
     home.file.".ssh/allowed_signers".text = ''
-      slop@freifick.net namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOTofPAGRTdGiTl7oeIWupx4euhHVkR3TyPsECnq2fWJ
+      slopmoder@tutamail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOTofPAGRTdGiTl7oeIWupx4euhHVkR3TyPsECnq2fWJ
     '';
 
     programs.ssh = {
