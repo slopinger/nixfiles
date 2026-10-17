@@ -5,6 +5,8 @@
   users.users.slop = {
     isNormalUser = true;
     uid = 1000;
+    # Own group with Arch's GID, so the copied home keeps its group owner.
+    group = "slop";
     shell = pkgs.bashInteractive;
     extraGroups = [ "wheel" ];
     # No password: SSH keys only, passwordless sudo.
@@ -15,6 +17,8 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPpRvU9RzGVXM4NTEf3rc7mCLagj2MngELLWS/G7v2a7 root@iphone"
     ];
   };
+
+  users.groups.slop.gid = 1000;
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "antigravity-cli"
