@@ -16,11 +16,11 @@
         "rev": "0bb0860f63dfa5624c6d187eb728fd663ce4ec12",
         "revCount": 5,
         "type": "git",
-        "url": "https://git.freifick.net/slop/arbeitsagentur-mcp.git"
+        "url": "https://github.com/slopinger/arbeitsagentur-mcp.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/arbeitsagentur-mcp.git"
+        "url": "https://github.com/slopinger/arbeitsagentur-mcp.git"
       }
     },
     "colmena": {
@@ -79,11 +79,11 @@
         "rev": "a8b232eabbbcbfa04bd793865dc05dbc3eff7c71",
         "revCount": 9,
         "type": "git",
-        "url": "https://git.freifick.net/slop/dn42.git"
+        "url": "https://github.com/slopinger/dn42.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/dn42.git"
+        "url": "https://github.com/slopinger/dn42.git"
       }
     },
     "driftline": {
@@ -99,11 +99,11 @@
         "rev": "7ee069b321dd3b917effac07621a8e48807101d3",
         "revCount": 4,
         "type": "git",
-        "url": "https://git.freifick.net/slop/driftline.git"
+        "url": "https://github.com/slopinger/driftline.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/driftline.git"
+        "url": "https://github.com/slopinger/driftline.git"
       }
     },
     "flake-utils": {
@@ -157,11 +157,11 @@
         "rev": "a337a6ed82caf566133eabf4c71f5cabd4d1e134",
         "revCount": 11,
         "type": "git",
-        "url": "https://git.freifick.net/slop/mayfly.git"
+        "url": "https://github.com/slopinger/mayfly.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/mayfly.git"
+        "url": "https://github.com/slopinger/mayfly.git"
       }
     },
     "nix-github-actions": {
@@ -331,11 +331,11 @@
         "rev": "9461da3ecb4c239c3382fb4848c606ee20ec7694",
         "revCount": 4,
         "type": "git",
-        "url": "https://git.freifick.net/slop/server-backups.git"
+        "url": "https://github.com/slopinger/server-backups.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/server-backups.git"
+        "url": "https://github.com/slopinger/server-backups.git"
       }
     },
     "slop-landing": {
@@ -351,11 +351,11 @@
         "rev": "b2142bb9d0cc6cc9a4850f1951a0646ce4ee637e",
         "revCount": 39,
         "type": "git",
-        "url": "https://git.freifick.net/slop/slop-landing.git"
+        "url": "https://github.com/slopinger/slop-landing.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/slop-landing.git"
+        "url": "https://github.com/slopinger/slop-landing.git"
       }
     },
     "stable": {
@@ -420,11 +420,11 @@
         "rev": "2a346cd3897a43ba3d0096f6139637d3f3145b50",
         "revCount": 8,
         "type": "git",
-        "url": "https://git.freifick.net/slop/therapie-mcp.git"
+        "url": "https://github.com/slopinger/therapie-mcp.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/therapie-mcp.git"
+        "url": "https://github.com/slopinger/therapie-mcp.git"
       }
     },
     "trough": {
@@ -440,11 +440,11 @@
         "rev": "f511e00c8a2b65fe96779e36b0b1277d840cbb5c",
         "revCount": 52,
         "type": "git",
-        "url": "https://git.freifick.net/slop/trough.git"
+        "url": "https://github.com/slopinger/trough.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.freifick.net/slop/trough.git"
+        "url": "https://github.com/slopinger/trough.git"
       }
     },
     "uv2nix": {

@@ -62,36 +62,36 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     trough = {
-      url = "git+https://git.freifick.net/slop/trough.git";
+      url = "git+https://github.com/slopinger/trough.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mayfly = {
-      url = "git+https://git.freifick.net/slop/mayfly.git";
+      url = "git+https://github.com/slopinger/mayfly.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dn42 = {
-      url = "git+https://git.freifick.net/slop/dn42.git";
+      url = "git+https://github.com/slopinger/dn42.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     driftline = {
-      url = "git+https://git.freifick.net/slop/driftline.git";
+      url = "git+https://github.com/slopinger/driftline.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     server-backups = {
-      url = "git+https://git.freifick.net/slop/server-backups.git";
+      url = "git+https://github.com/slopinger/server-backups.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     therapie-mcp = {
-      url = "git+https://git.freifick.net/slop/therapie-mcp.git";
+      url = "git+https://github.com/slopinger/therapie-mcp.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     arbeitsagentur-mcp = {
-      url = "git+https://git.freifick.net/slop/arbeitsagentur-mcp.git";
+      url = "git+https://github.com/slopinger/arbeitsagentur-mcp.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # freifick.net static site + slopd (guestbook/counter backend)
     slop-landing = {
-      url = "git+https://git.freifick.net/slop/slop-landing.git";
+      url = "git+https://github.com/slopinger/slop-landing.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
