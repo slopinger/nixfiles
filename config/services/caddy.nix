@@ -33,6 +33,10 @@
   users.users.caddy.uid = lib.mkForce 968;
   users.groups.caddy.gid = lib.mkForce 968;
 
+  # Arch's caddy package keeps its data (certificates, ACME account) directly in
+  # /var/lib/caddy; NixOS would default to /var/lib/caddy/.local/share/caddy.
+  systemd.services.caddy.environment.XDG_DATA_HOME = "/var/lib";
+
   # for the admin socket (the upstream unit allows writes to /run/caddy)
   systemd.services.caddy.serviceConfig.RuntimeDirectory = "caddy";
 }
