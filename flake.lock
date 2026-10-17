@@ -10,11 +10,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1792052230,
-        "narHash": "sha256-vm2OpnnYBDMPTqOIJqRg7MSy5SzAKC+qPw6QVwdM0zY=",
+        "lastModified": 1792242683,
+        "narHash": "sha256-/xMyYAh57W8DaoLiBCo3/Rg1pPVaKwCCqDWaSXTvm24=",
         "ref": "refs/heads/main",
-        "rev": "0bb0860f63dfa5624c6d187eb728fd663ce4ec12",
-        "revCount": 5,
+        "rev": "1d7e967b85b5b3a16c11c004fd701106e11b1564",
+        "revCount": 9,
         "type": "git",
         "url": "https://github.com/slopinger/arbeitsagentur-mcp.git"
       },
@@ -73,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792052008,
-        "narHash": "sha256-ROhNHvzFNE3nxznBWE3DV7N4qCMgxM6rp5t64D0H1pE=",
+        "lastModified": 1792243747,
+        "narHash": "sha256-FEgn9Ffi9HY9O1EErz4ufD4ixrtWD8vhPRxnBQ7cj+Q=",
         "ref": "refs/heads/main",
-        "rev": "a8b232eabbbcbfa04bd793865dc05dbc3eff7c71",
-        "revCount": 9,
+        "rev": "e4ec3eb6e0182f9130b366fd4a437b7ba0837ba6",
+        "revCount": 43,
         "type": "git",
         "url": "https://github.com/slopinger/dn42.git"
       },
@@ -93,11 +93,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792051590,
-        "narHash": "sha256-OiWsJeBaeYsQHI/y/2UnrTsdauvt1/m9IueHO7SH8f0=",
+        "lastModified": 1792242681,
+        "narHash": "sha256-H8ugjBsRBCD3SBNnk+GriLhm00jiufpIqLPeSfJ7DQM=",
         "ref": "refs/heads/main",
-        "rev": "7ee069b321dd3b917effac07621a8e48807101d3",
-        "revCount": 4,
+        "rev": "3e3bbb2d3a5b07f3657c1d0ff72009fa31beebc8",
+        "revCount": 7,
         "type": "git",
         "url": "https://github.com/slopinger/driftline.git"
       },
@@ -131,11 +131,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791940130,
-        "narHash": "sha256-hRCCi4fp5IjLz4cA8+RkUsaYAHzbd7M5FSAjKOq4E+k=",
+        "lastModified": 1792098797,
+        "narHash": "sha256-u4DIIZgznEGzByxXrxWCXK19VcMtTBmi/M9gZ7Jk9bM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "92a0ed1be12f1e20093faf8af63bae2c74ad521e",
+        "rev": "640725978b99076e18e069f6e7d2959124584f8f",
         "type": "github"
       },
       "original": {
@@ -151,11 +151,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792052244,
-        "narHash": "sha256-swGkwtrcURGsnEMR4KDaTX9XR+VWt40k918TpvaDy2c=",
+        "lastModified": 1792242679,
+        "narHash": "sha256-NsfwF5aD6sItRmCHSyGmanaj7hmK0Jibf4u14HbN0Aw=",
         "ref": "refs/heads/main",
-        "rev": "a337a6ed82caf566133eabf4c71f5cabd4d1e134",
-        "revCount": 11,
+        "rev": "90333c193a8fb69162ed85aa94b0de94d5382340",
+        "revCount": 15,
         "type": "git",
         "url": "https://github.com/slopinger/mayfly.git"
       },
@@ -325,11 +325,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792051591,
-        "narHash": "sha256-QAUBvLmTmSySx/Q2+hNvGUbEvBsFohkkCS203bqfSbc=",
+        "lastModified": 1792242041,
+        "narHash": "sha256-C+0D6wbY4BGXxTzeZ3H6cL5bdGPUGcVVqZ9RYuDkOso=",
         "ref": "refs/heads/main",
-        "rev": "9461da3ecb4c239c3382fb4848c606ee20ec7694",
-        "revCount": 4,
+        "rev": "8dd018d71c716c1a89960a5d32948848db39a804",
+        "revCount": 9,
         "type": "git",
         "url": "https://github.com/slopinger/server-backups.git"
       },
@@ -345,11 +345,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792052246,
-        "narHash": "sha256-8CrN9qcftM4ELWo8NCw+j8QHuMRwUBUrj6BoJEvA1Uo=",
+        "lastModified": 1792242649,
+        "narHash": "sha256-RCErCwfpq9GDAfMhiEnoJVCMmvOjumzt8ECdLWIyltg=",
         "ref": "refs/heads/main",
-        "rev": "b2142bb9d0cc6cc9a4850f1951a0646ce4ee637e",
-        "revCount": 39,
+        "rev": "690d4b2e2b3616f2dffde9757e2fb8b1bd4bb64c",
+        "revCount": 58,
         "type": "git",
         "url": "https://github.com/slopinger/slop-landing.git"
       },
@@ -414,11 +414,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1792052229,
-        "narHash": "sha256-sKRZCjIhMfFhZrAYm7KvMK7u6KD0ScXgbeStAT3nJZg=",
+        "lastModified": 1792240248,
+        "narHash": "sha256-wNSMSp4J/vcq5ldrodRO6CaUlssAU9CMuclIjihq1Ug=",
         "ref": "refs/heads/main",
-        "rev": "2a346cd3897a43ba3d0096f6139637d3f3145b50",
-        "revCount": 8,
+        "rev": "d18a57287929bb7e738dc5ee54b8c6e7976ee723",
+        "revCount": 11,
         "type": "git",
         "url": "https://github.com/slopinger/therapie-mcp.git"
       },
@@ -434,11 +434,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792052006,
-        "narHash": "sha256-0FFFRhlFEtAZ1+EZG/KeH5gAZYO+ZZzTw/fP5VOXb1c=",
+        "lastModified": 1792242566,
+        "narHash": "sha256-EDBUkRxo+Xy8GTbEWISXpWYdDen1L0SJvLwc+BoDuLs=",
         "ref": "refs/heads/main",
-        "rev": "f511e00c8a2b65fe96779e36b0b1277d840cbb5c",
-        "revCount": 52,
+        "rev": "15dfa03e0cac3bb8035e54e7e01f64203e860973",
+        "revCount": 192,
         "type": "git",
         "url": "https://github.com/slopinger/trough.git"
       },
