@@ -6,6 +6,10 @@ hostname is `slop`, domain `kyouma.net`. The existing Arch installation remains
 on `/dev/sda`; the NixOS installation uses only `/dev/sdb` (stable by-id
 `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`). Never run disko against the Arch disk.
 
+Source: https://github.com/slopinger/nixfiles. Application flake inputs are
+fetched from https://github.com/slopinger; development moved off the self-hosted
+GitLab, which this configuration still runs (archived) until it is decommissioned.
+
 ## Host configuration
 
 - Static IPv4/IPv6 and Cloudflare DNS through networkd/resolved; unchanged WAN MAC,

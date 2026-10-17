@@ -45,7 +45,7 @@
       '';
     };
 
-    # Commits and tags are signed with an SSH key; GitLab shows them as "Verified".
+    # Commits and tags are signed with an SSH key; GitHub shows them as "Verified".
     programs.git = {
       enable = true;
       signing = {
