@@ -17,8 +17,8 @@
     ./hardware-configuration.nix
   ];
 
-  # Same name as the Arch install (shell prompts, journal, DN42 tooling).
-  networking.hostName = "arch";
+  # Renamed from `arch` with the move to NixOS.
+  networking.hostName = "slopbox";
   # No firewall, as on Arch: internal services bind to loopback, DN42 tunnels need their UDP ports.
   networking.firewall.enable = false;
   freifick.deployment.targetHost = "freifick.net";
