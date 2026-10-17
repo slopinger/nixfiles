@@ -30,8 +30,11 @@
     # was `nix profile install` on Arch
     home.packages = with pkgs; [
       claude-code
+      codex
       antigravity-cli # agy
     ];
+    # gh-login, slopmail (copied with /home)
+    home.sessionPath = [ "$HOME/.local/bin" ];
 
     programs.bash = {
       enable = true;
@@ -39,9 +42,13 @@
         ls = "ls --color=auto";
         grep = "grep --color=auto";
         claude = "claude --dangerously-skip-permissions";
+        agy = "agy --dangerously-skip-permissions";
+        codex = "codex --dangerously-bypass-approvals-and-sandbox";
       };
+      # Aliases that carry credentials stay out of this public repo: put them in ~/.bashrc.local.
       initExtra = ''
         PS1='[\u@\h \W]\$ '
+        if [ -r ~/.bashrc.local ]; then . ~/.bashrc.local; fi
       '';
     };
 
@@ -65,6 +72,11 @@
         pull.rebase = true;
       };
     };
+    # `gh auth git-credential` as the credential helper for github.com (HTTPS remotes).
+    programs.gh = {
+      enable = true;
+      gitCredentialHelper.enable = true;
+    };
     home.file.".ssh/allowed_signers".text = ''
       slopmoder@tutamail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOTofPAGRTdGiTl7oeIWupx4euhHVkR3TyPsECnq2fWJ
     '';
@@ -75,6 +87,12 @@
       settings."git.dn42.dev" = {
         User = "git";
         IdentityFile = "~/.ssh/id_ed25519_signing";
+        IdentitiesOnly = "yes";
+      };
+      # GitHub (account slopinger); project remotes use HTTPS via gh, this is for SSH use
+      settings."github.com" = {
+        User = "git";
+        IdentityFile = "~/.ssh/id_ed25519_github";
         IdentitiesOnly = "yes";
       };
     };
