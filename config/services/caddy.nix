@@ -29,6 +29,10 @@
       }
     '';
   };
+  # Arch's caddy IDs, so /var/lib/caddy (certificates, ACME account) and /var/log/caddy carry over.
+  users.users.caddy.uid = lib.mkForce 968;
+  users.groups.caddy.gid = lib.mkForce 968;
+
   # for the admin socket (the upstream unit allows writes to /run/caddy)
   systemd.services.caddy.serviceConfig.RuntimeDirectory = "caddy";
 }
