@@ -5,9 +5,9 @@ Every software project needs a locked Nix flake and applicable reusable NixOS mo
 Never add Co-Authored-By trailers or session links to public GitHub content.
 Development lives on GitHub only (`git push origin main`).
 
-- Migration to the dedicated `/dev/sdb` disk is explicitly authorized. The running
-  Arch disk `/dev/sda` must remain intact. Host flake attribute and hostname are `arch`.
-  See README for the layout, services and install procedure.
+- NixOS runs from `/dev/sdb`; the old Arch disk `/dev/sda` must remain intact (fallback,
+  mounted read-only at `/mnt/arch`). Host flake attribute and hostname are `slopbox`.
+  See README for the layout, services and migration procedure.
 - Application flakes own their packages/modules. This flake pins public GitHub inputs,
   exposes packages through the overlay, and reexports their NixOS modules. Update input
   locks when changing application revisions; do not maintain duplicate application builds.
@@ -16,16 +16,18 @@ Development lives on GitHub only (`git push origin main`).
   checks in its source repo. Inspect status, sign small commits and push only your changes.
 - Secrets are runtime files, never Nix literals or store paths. Preserve WAN/SSH settings.
 
-## NixOS disk migration (configuration complete 2026-10-17; install not done)
-- Target `/dev/sdb` (by-id `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`): 4 GiB ESP `nixos-esp` + btrfs
-  `nixos-root` with subvolumes (README). sdb still holds an older 1 GiB ESP + ext4 attempt with the
-  same partlabels: any test image must use different labels, or disko's by-partlabel paths hit sdb.
-  Test installs must set `boot.loader.efi.canTouchEfiVariables = false` (host NVRAM).
-- The config mirrors the live Arch host: keep it in sync when services, Caddy sites, networkd or
-  DN42 peers change there (`scripts/dn42-peers-from-arch.py` regenerates `dn42/peers.nix`).
-  The live Arch services and their deploy scripts remain authoritative until the switch.
-- Verify after changes: `nix flake check --no-build`, build the toplevel, and diff generated
-  units against the live files when touching networkd/BIRD/Caddy.
-- nixpkgs is pinned to `7fd4004` because Lix fails to build on newer unstable (README).
+## Migration from Arch (2026-10-17)
+- `/dev/sdb` (by-id `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`): 4 GiB ESP `nixos-esp` + btrfs
+  `nixos-root` with subvolumes, created by disko (README). Test images need partlabels other
+  than `nixos-esp`/`nixos-root`, or disko's by-partlabel paths hit the real disk.
+- `config/hosts/slopbox/migration.nix` holds the fallback: `canTouchEfiVariables = false`
+  (NVRAM entry "NixOS" made by hand), `nixos-boot-check` (sets NixOS first in BootOrder once
+  the network works, else boots Arch once), `/mnt/arch`. Remove it once Arch is retired.
+- State was copied with `scripts/migrate-from-arch.sh`; Arch's `/etc`, `/usr/local`, `/opt`
+  and logs are kept in `/srv/arch` for reference.
+- `scripts/dn42-peers-from-arch.py` only applies while the Arch files exist (`/mnt/arch`).
+  On NixOS, add DN42 peers to `config/services/dn42/peers.nix` and rebuild.
+- Verify after changes: `nix flake check --no-build`, build the toplevel.
+- nixpkgs is locked past the Lix build failure of nixos-unstable 2026-10-14 (README).
 - The dn42 daemon's old hardcoded registry credential is still in public git history and needs external
   rotation; never copy it into Nix expressions, store paths or notes.

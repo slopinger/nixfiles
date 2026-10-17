@@ -1,15 +1,15 @@
 # slop's NixOS infrastructure
 
-Declarative configuration for the freifick.net server (hostname `arch`), a
-Proxmox/QEMU UEFI VM that currently runs Arch Linux on `/dev/sda`. This flake
-describes the same server as NixOS, to be installed on the dedicated second disk
-`/dev/sdb` (stable by-id `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`). Never run disko
+Declarative configuration for the freifick.net server (hostname `slopbox`), a
+Proxmox/QEMU UEFI VM. NixOS lives on the second disk `/dev/sdb` (stable by-id
+`scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`); the previous Arch Linux install stays on
+`/dev/sda` as a fallback and is mounted read-only at `/mnt/arch`. Never run disko
 against the Arch disk.
 
 Source: https://github.com/slopinger/nixfiles. Application flake inputs are
 fetched from https://github.com/slopinger.
 
-## Host configuration (`config/hosts/arch`)
+## Host configuration (`config/hosts/slopbox`)
 
 - Disk (`disko.nix`): GPT with a **4 GiB** FAT32 ESP (`nixos-esp`, systemd-boot keeps
   a kernel + initrd per generation there, ~45 MiB each; boot menu limited to 30) and a
@@ -26,6 +26,9 @@ fetched from https://github.com/slopinger.
   with gh as credential helper, SSH hosts for GitHub and git.dn42.dev, tmux, and
   claude-code, codex and antigravity-cli.
 - Lix, QEMU guest agent, UTC, en_US.UTF-8, latest kernel, systemd initrd.
+- `migration.nix`: the move from Arch (see below). It mounts the Arch root at
+  `/mnt/arch`, disables emergency mode and reboots 30 s after a panic, and runs
+  `nixos-boot-check` until it first succeeds.
 
 ## Services (`config/services`)
 
@@ -64,39 +67,47 @@ put into Nix. ROA tables live in `/var/lib/dn42-roa`.
 
 ```console
 nix flake check --no-build
-nix build .#nixosConfigurations.arch.config.system.build.toplevel
+nix build .#nixosConfigurations.slopbox.config.system.build.toplevel
 nix flake update trough                 # example application update
 nix develop                            # colmena and nixos-anywhere tools
-colmena apply --on arch                 # deploy as slop to freifick.net (once on NixOS)
+colmena apply --on slopbox              # deploy as slop to freifick.net
+sudo nixos-rebuild switch --flake .#slopbox   # or locally on the host
 ```
 
-nixpkgs is held at `7fd4004` (2026-10-11): on the 2026-10-14 nixos-unstable, Lix
-2.95.4 is not in the binary cache and fails to build (meson `mimalloc` option). Move
-it forward once `lixPackageSets.stable.lix` is cached again.
+nixpkgs tracks `nixos-unstable`, but is locked to `0541f33` (nixos-unstable-small,
+2026-10-17): on the 2026-10-14 nixos-unstable, Lix 2.95.4 is not in the binary cache
+and fails to build (meson `mimalloc` option). A plain `nix flake update` is fine once
+nixos-unstable has moved past that commit.
 
-## Installing to `/dev/sdb`
+## Moving from Arch to `/dev/sdb`
 
-1. Build `system.build.toplevel` and `system.build.diskoScript`. The disko script
-   wipes and repartitions `/dev/sdb` only, addressing partitions by the partlabels
-   `nixos-esp`/`nixos-root` (Arch uses `ESP`/`root`; keep labels unique).
-2. `sudo nixos-install --root /mnt --system <toplevel> --no-root-passwd --no-channel-copy`.
-   `canTouchEfiVariables` adds a "Linux Boot Manager" entry first in BootOrder;
-   put Arch back first (`efibootmgr -o`) and test with `efibootmgr -n <entry>`
-   (BootNext) until NixOS is verified.
-3. Copy state (stop writers and timers for the final copy): `/home` (including
-   `~/.secrets`, SSH/signing keys, agent configs and private workflow databases),
-   `/srv`, `/var/lib/{trough,slopd,mayfly,caddy,dn42-roa}`, SSH host keys,
-   `/etc/machine-id`, `/etc/trough-secrets.env`, `/etc/wireguard/dn42.key` (+ `.pub`).
-   Verify SQLite integrity and byte identity of keys without printing them. Arch's
-   `/etc/trough.env` is no longer needed (the module sets the same values).
-4. Before relying on Home Manager, move credential-bearing aliases out of
-   `~/.bashrc` (it gets replaced; the old file is kept as `.bashrc.before-nixos`)
-   into `~/.bashrc.local`.
+Done on 2026-10-17. To repeat it from the Arch install (as root, from this checkout):
 
-The layout and boot path were tested on 2026-10-17 by running the disko script and
-`nixos-install` against a sparse loop-device image (unique test labels,
-`canTouchEfiVariables = false` so the host's NVRAM stays untouched) and booting it with
-OVMF: it reached multi-user with no failed units, all services active, and BIRD up
-on empty ROA tables without network.
+1. Build `system.build.toplevel`, `system.build.diskoScript` and
+   `system.build.mountScript`. The disko script wipes `/dev/sdb` only and creates the
+   ESP and btrfs subvolumes, addressed by the partlabels `nixos-esp`/`nixos-root`
+   (Arch uses `ESP`/`root`; keep labels unique).
+2. `nixos-install --root /mnt --system <toplevel> --no-root-passwd --no-channel-copy`.
+   `canTouchEfiVariables` is off, so add the NVRAM entry by hand and keep Arch first:
+   `efibootmgr -c -d /dev/sdb -p 1 -L NixOS -l '\EFI\systemd\systemd-bootx64.efi'`,
+   then `efibootmgr -o <old order>`.
+3. `scripts/migrate-from-arch.sh /mnt` copies the state (repeatable, rsync):
+   `/home/slop`, `/root`, `/srv`, `/var/lib/{trough,slopd,mayfly,caddy,docker,containerd}`,
+   the journal and Caddy logs, `/etc/machine-id`, SSH host keys,
+   `/etc/trough-secrets.env`, `/etc/wireguard/dn42.{key,pub}`, the `nix profile`
+   closures with their GC roots, and a reference copy of Arch's `/etc`, `/usr/local`,
+   `/opt` and other logs in `/srv/arch`. Credential-bearing shell aliases belong in
+   `~/.bashrc.local` (Home Manager replaces `~/.bashrc` and keeps the old one as
+   `.bashrc.before-nixos`).
+4. `scripts/cutover-from-arch.sh <mountScript> <efibootmgr>` stops the stateful
+   services, runs the copy once more, and reboots into NixOS once (EFI BootNext). On
+   NixOS, `nixos-boot-check` makes the NixOS entry the default once IPv4 and IPv6 work;
+   without network for 10 minutes it boots Arch once more. A reset before that also
+   returns to Arch.
+
+Before the switch, the installed disk was booted in QEMU (OVMF, `snapshot=on`, isolated
+user-mode network, commands through the guest agent) with the copied state: no failed
+units, all sites served over HTTPS with the copied certificates, 45 DN42 tunnels and
+BIRD sessions configured, the docker images present, trough/slopd data identical.
 
 Operational notes for the live host are maintained in `/home/slop/CLAUDE.md`.
