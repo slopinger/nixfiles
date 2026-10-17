@@ -6,8 +6,8 @@ Never add Co-Authored-By trailers or session links to public GitHub content.
 Development lives on GitHub only (`git push origin main`).
 
 - Migration to the dedicated `/dev/sdb` disk is explicitly authorized. The running
-  Arch disk `/dev/sda` must remain intact. Host flake attribute stays `arch`; its
-  network identity is now `slop.kyouma.net`. See README for migration status.
+  Arch disk `/dev/sda` must remain intact. Host flake attribute and hostname are `arch`.
+  See README for the layout, services and install procedure.
 - Application flakes own their packages/modules. This flake pins public GitHub inputs,
   exposes packages through the overlay, and reexports their NixOS modules. Update input
   locks when changing application revisions; do not maintain duplicate application builds.
@@ -16,18 +16,16 @@ Development lives on GitHub only (`git push origin main`).
   checks in its source repo. Inspect status, sign small commits and push only your changes.
 - Secrets are runtime files, never Nix literals or store paths. Preserve WAN/SSH settings.
 
-## NixOS disk migration (in progress since 2026-10-15)
-- Target: `/dev/sdb` (by-id `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`) with `nixos-esp` 1 GiB FAT32 and
-  `nixos-root` ext4, mounted under `/mnt` during installation. Running Arch stays on `/dev/sda`; never
-  format it. Arch is first in EFI BootOrder until the NixOS install is verified.
-- Host `arch` configures FQDN `slop.kyouma.net` (`hostName=slop`, `domain=kyouma.net`), all public
-  sites, trough, slopbox, DN42 and backup timers; service numeric UIDs/GIDs are preserved.
-- Copy all homes (including `.secrets`, credentials, SSH/signing keys and private workflow DBs), `/srv`,
-  service state and `/etc/trough-secrets.env`. Preserve SSH host keys, the WireGuard key and Caddy TLS
-  state. Installation, final consistent copy and EFI verification are not complete yet.
-- Pinned application flakes: slop-landing, driftline, server-backups, trough, mayfly, dn42, therapie-mcp,
-  arbeitsagentur-mcp. Lantern (+ libraries) and slopbgp have their own flakes and modules but are not
-  part of this host. The live Arch services and their deploy scripts remain authoritative; packaging
-  here does not deploy them.
+## NixOS disk migration (configuration complete 2026-10-17; install not done)
+- Target `/dev/sdb` (by-id `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`): 4 GiB ESP `nixos-esp` + btrfs
+  `nixos-root` with subvolumes (README). sdb still holds an older 1 GiB ESP + ext4 attempt with the
+  same partlabels: any test image must use different labels, or disko's by-partlabel paths hit sdb.
+  Test installs must set `boot.loader.efi.canTouchEfiVariables = false` (host NVRAM).
+- The config mirrors the live Arch host: keep it in sync when services, Caddy sites, networkd or
+  DN42 peers change there (`scripts/dn42-peers-from-arch.py` regenerates `dn42/peers.nix`).
+  The live Arch services and their deploy scripts remain authoritative until the switch.
+- Verify after changes: `nix flake check --no-build`, build the toplevel, and diff generated
+  units against the live files when touching networkd/BIRD/Caddy.
+- nixpkgs is pinned to `7fd4004` because Lix fails to build on newer unstable (README).
 - The dn42 daemon's old hardcoded registry credential is still in public git history and needs external
   rotation; never copy it into Nix expressions, store paths or notes.
