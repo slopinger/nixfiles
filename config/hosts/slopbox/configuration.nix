@@ -15,6 +15,7 @@
     ../../services/agent-tools.nix
     ./disko.nix
     ./hardware-configuration.nix
+    ./migration.nix
   ];
 
   # Renamed from `arch` with the move to NixOS.
