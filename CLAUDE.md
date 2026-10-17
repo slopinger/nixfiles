@@ -15,3 +15,19 @@ Development lives on GitHub only (`git push origin main`).
   builds the host system; `nix develop` provides deployment tools. Run relevant application
   checks in its source repo. Inspect status, sign small commits and push only your changes.
 - Secrets are runtime files, never Nix literals or store paths. Preserve WAN/SSH settings.
+
+## NixOS disk migration (in progress since 2026-10-15)
+- Target: `/dev/sdb` (by-id `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`) with `nixos-esp` 1 GiB FAT32 and
+  `nixos-root` ext4, mounted under `/mnt` during installation. Running Arch stays on `/dev/sda`; never
+  format it. Arch is first in EFI BootOrder until the NixOS install is verified.
+- Host `arch` configures FQDN `slop.kyouma.net` (`hostName=slop`, `domain=kyouma.net`), all public
+  sites, trough, slopbox, DN42 and backup timers; service numeric UIDs/GIDs are preserved.
+- Copy all homes (including `.secrets`, credentials, SSH/signing keys and private workflow DBs), `/srv`,
+  service state and `/etc/trough-secrets.env`. Preserve SSH host keys, the WireGuard key and Caddy TLS
+  state. Installation, final consistent copy and EFI verification are not complete yet.
+- Pinned application flakes: slop-landing, driftline, server-backups, trough, mayfly, dn42, therapie-mcp,
+  arbeitsagentur-mcp. Lantern (+ libraries) and slopbgp have their own flakes and modules but are not
+  part of this host. The live Arch services and their deploy scripts remain authoritative; packaging
+  here does not deploy them.
+- The dn42 daemon's old hardcoded registry credential is still in public git history and needs external
+  rotation; never copy it into Nix expressions, store paths or notes.
