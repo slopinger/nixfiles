@@ -7,8 +7,7 @@ on `/dev/sda`; the NixOS installation uses only `/dev/sdb` (stable by-id
 `scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`). Never run disko against the Arch disk.
 
 Source: https://github.com/slopinger/nixfiles. Application flake inputs are
-fetched from https://github.com/slopinger; development moved off the self-hosted
-GitLab, which this configuration still runs (archived) until it is decommissioned.
+fetched from https://github.com/slopinger.
 
 ## Host configuration
 
@@ -18,19 +17,19 @@ GitLab, which this configuration still runs (archived) until it is decommissione
   home-manager bash, SSH, git and tmux. Existing managed dotfiles are backed up
   with `.before-nixos` during first activation. Homes and private workflow DBs
   are migrated independently of the public configuration.
-- Caddy serves freifick.net and proxies GitLab, trough and slopbox. Driftline is
+- Caddy serves freifick.net and proxies trough and slopbox. Driftline is
   packaged static content. All legacy redirects remain. TLS state is retained
   at `/var/lib/caddy`; Caddy's data-directory environment matches Arch.
 - slopd, trough (`fedi.freifick.net`, permanent federation identity), mayfly
-  (`slopbox.freifick.net`), verified service backup timer, GitLab Docker container
-  and nightly backup timer are enabled. Service UIDs/GIDs match the old state.
+  (`slopbox.freifick.net`), and the verified service backup timer
+  are enabled. Service UIDs/GIDs match the old state.
 - DN42 dummy interface, BIRD 3, ROA timer, existing runtime WireGuard/peer files
   and automatic peering monitor are retained. Peer snippets remain mutable in
   `/etc/bird/peers`; keys stay outside the store. A configured peer does not
   imply an established BGP session.
 - Firewall remains disabled to match the live server, including DN42 tunnels.
   Internal applications bind to loopback. Public application ports are 22,
-  80/443 and GitLab SSH 2222; WireGuard uses UDP 20125.
+  80/443; WireGuard uses UDP 20125.
 - Lix, QEMU guest agent, UTC, en_US.UTF-8, no swap, systemd-boot with a dedicated
   1 GiB ESP and ext4 root. The old disk remains a firmware fallback.
 
@@ -62,12 +61,6 @@ agent credentials and private workflow databases), `/root`, `/srv`, `/opt`,
 `/etc/trough.env`, `/etc/trough-secrets.env`, WireGuard keys/network files and
 BIRD peer snippets. A root-only original `/etc` snapshot is kept at
 `/root/arch-migration/etc` on the destination.
-
-GitLab uses only bind-mounted persistent data under `/srv/gitlab`; retain its
-`.env`, `config/gitlab-secrets.json`, `gitlab.rb`, repositories and PostgreSQL
-state. A preserved Docker image at `/root/arch-migration/gitlab-image.tar` is
-imported when absent, so first boot does not depend on Docker Hub. Use a clean
-Docker engine state rather than downgrading Arch's newer daemon database.
 
 Copy live state initially, then stop database/upload writers and backup timers
 for a final consistent copy. Verify SQLite integrity, secret/SSH-key byte

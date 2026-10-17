@@ -72,11 +72,9 @@
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
-      # GitLab at git.freifick.net (git over SSH on port 2222)
-      settings."git.freifick.net" = {
-        Port = 2222;
+      settings."git.dn42.dev" = {
         User = "git";
-        IdentityFile = "~/.ssh/id_ed25519_gitlab";
+        IdentityFile = "~/.ssh/id_ed25519_signing";
         IdentitiesOnly = "yes";
       };
     };

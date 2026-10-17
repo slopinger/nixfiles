@@ -1,5 +1,5 @@
 # Caddy terminates TLS for every site on this host. Site blocks live with their services
-# (freifick-net.nix, gitlab.nix); `import security_headers` in new ones.
+# (freifick-net.nix, current-services.nix); `import security_headers` in new ones.
 { lib, ... }: {
   freifick.deployment.tags = [ "web" ];
 

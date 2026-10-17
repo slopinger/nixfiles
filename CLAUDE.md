@@ -3,7 +3,7 @@
 Follow `/home/slop/CLAUDE.md`; keep this file and README current. AGENTS.md links here.
 Every software project needs a locked Nix flake and applicable reusable NixOS module.
 Never add Co-Authored-By trailers or session links to public GitHub content.
-Development lives on GitHub only (`git push origin main`); the old GitLab is archived.
+Development lives on GitHub only (`git push origin main`).
 
 - Migration to the dedicated `/dev/sdb` disk is explicitly authorized. The running
   Arch disk `/dev/sda` must remain intact. Host flake attribute stays `arch`; its

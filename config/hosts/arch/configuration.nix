@@ -1,12 +1,11 @@
 # The freifick.net server: Proxmox VM, 12 vCPUs, 15 GiB RAM, no swap.
-# Public: 22 (sshd), 80/443 (Caddy), 2222 (GitLab git-over-SSH). Everything else binds to loopback.
+# Public: 22 (sshd), 80/443 (Caddy). Everything else binds to loopback.
 { pkgs, ... }: {
   imports = [
     ../../common
     ../../profiles/headless.nix
     ../../profiles/qemu.nix
     ../../services/freifick-net.nix
-    ../../services/gitlab.nix
     ../../services/current-services.nix
     ./disko.nix
     ./hardware-configuration.nix
@@ -22,7 +21,7 @@
 
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  # DNS names: freifick.net, www.freifick.net, git.freifick.net (Cloudflare, DNS-only), slop.kyouma.net
+  # DNS names: freifick.net, www.freifick.net (Cloudflare, DNS-only), slop.kyouma.net
   systemd.network.networks."10-wan" = {
     matchConfig.MACAddress = "bc:24:11:e7:2e:6a";
     address = [
