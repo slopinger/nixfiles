@@ -10,7 +10,7 @@ for m in "$root" "$root/boot" "$root/nix" "$root/home" "$root/var/lib"; do
 done
 [ -e "$root/nix/var/nix/profiles/system" ] || { echo "$root has no installed NixOS system" >&2; exit 1; }
 
-rs() { rsync -aHAXS --numeric-ids --delete "$@"; }
+rs() { rsync -aHAXS --numeric-ids --delete --mkpath "$@"; }
 
 # Home directories and service data, at the same paths. Owners keep their Arch IDs
 # (slop 1000, trough 966/965, slopd 967, mayfly 963, caddy 968; pinned in the config).
@@ -29,6 +29,8 @@ install -m 0444 /etc/machine-id "$root/etc/machine-id"
 install -d -m 0755 "$root/etc/ssh" "$root/etc/wireguard"
 cp -a /etc/ssh/ssh_host_* "$root/etc/ssh/"
 cp -a /etc/wireguard/dn42.key /etc/wireguard/dn42.pub "$root/etc/wireguard/"
+# networkd reads the key before tmpfiles fixes the group, so use NixOS's systemd-network GID now.
+chgrp "$(awk -F: '$1 == "systemd-network" { print $3 }' "$root/etc/group")" "$root/etc/wireguard/dn42.key"
 cp -a /etc/trough-secrets.env "$root/etc/"
 
 # Tools installed with `nix profile` (claude-code, agy, github-mcp-server, ...) and their
