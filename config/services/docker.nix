@@ -1,4 +1,5 @@
-# Docker-published ports bypass the host firewall: publish as 127.0.0.1:<port>:<port>
+# Docker for test harnesses; no permanent containers.
+# Docker-published ports bypass any host firewall: publish as 127.0.0.1:<port>:<port>
 # unless they must be public.
 { ... }: {
   virtualisation.docker = {
@@ -6,5 +7,4 @@
     liveRestore = true; # updating docker doesn't take the containers down
     logDriver = "journald";
   };
-  virtualisation.oci-containers.backend = "docker";
 }

@@ -32,7 +32,6 @@ in {
     tmux
     vim
     curl
-    python3
   ];
 
   freifick.deployment.tags = [ "all" ];

@@ -9,6 +9,9 @@ in {
   # The guestbook is public and user-written: moderate it with
   # `slopctl list` / `slopctl hide <id>` / `slopctl delete <id>`.
   freifick.slopd.enable = true;
+  # Numeric IDs of the Arch install, so migrated state keeps its owner.
+  users.users.slopd.uid = 967;
+  users.groups.slopd.gid = 967;
 
   services.caddy.virtualHosts = {
     "freifick.net" = {
