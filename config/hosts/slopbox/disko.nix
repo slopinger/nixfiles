@@ -1,4 +1,4 @@
-# Dedicated NixOS disk (scsi1); the Arch disk (scsi0) is never touched. sdX names are not stable.
+# The NixOS disk (scsi1), addressed by id: sdX names are not stable.
 # A 4 GiB ESP: systemd-boot keeps a kernel + initrd per generation on it, and
 # linuxPackages_latest with a systemd initrd quickly fills the 1 GiB Arch layout.
 # Root is btrfs with subvolumes, so / can be snapshotted without /nix and noisy state.

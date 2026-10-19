@@ -1,12 +1,9 @@
 # slop's NixOS infrastructure
 
 Declarative configuration for the freifick.net server (hostname `slopbox`), a
-Proxmox/QEMU UEFI VM. NixOS lives on the disk
-`/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`; the previous Arch Linux install
-stays on `scsi-0QEMU_QEMU_HARDDISK_drive-scsi0` as a fallback and is mounted read-only
-at `/mnt/arch` when it is attached at boot. The `sdX` names are not stable: during the
-move from Arch the NixOS disk was `/dev/sdb`, now it is usually `/dev/sda`. Never run
-disko against the Arch disk.
+Proxmox/QEMU UEFI VM with a single disk,
+`/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1` (refer to it by id; `sdX` names
+are not stable). It replaced an Arch Linux install in October 2026 (see the end).
 
 Source: https://github.com/slopinger/nixfiles. Application flake inputs are
 fetched from https://github.com/slopinger.
@@ -28,9 +25,8 @@ fetched from https://github.com/slopinger.
   with gh as credential helper, SSH hosts for GitHub and git.dn42.dev, tmux, and
   claude-code, codex and antigravity-cli.
 - Lix, QEMU guest agent, UTC, en_US.UTF-8, latest kernel, systemd initrd.
-- `migration.nix`: the move from Arch (see below). It mounts the Arch root at
-  `/mnt/arch`, disables emergency mode and reboots 30 s after a panic, and runs
-  `nixos-boot-check` until it first succeeds.
+- Boot: systemd-boot (30 generations), `panic=30`. OVMF also finds it through the
+  ESP's fallback `\EFI\BOOT\BOOTX64.EFI`, so a reset NVRAM still boots NixOS.
 
 ## Services (`config/services`)
 
@@ -54,13 +50,8 @@ and NixOS modules; this flake pins them and reexports the modules.
 
 `config/services/dn42/peers.nix` feeds `services.slop-dn42.peers` from the dn42
 flake, which generates the networkd netdev/network pair and the BIRD session per peer
-(identical to what `dn42ctl add-peer` writes on Arch). On NixOS `/etc/systemd/network`
-is read-only, so new peers are added there and deployed with a rebuild. While Arch is
-live, regenerate the file from the running host's files with
-
-```console
-scripts/dn42-peers-from-arch.py > config/services/dn42/peers.nix
-```
+(identical to what `dn42ctl add-peer` wrote on Arch). `/etc/systemd/network` is
+read-only, so new peers are added there and deployed with a rebuild.
 
 The shared tunnel key `/etc/wireguard/dn42.key` is runtime state; it is copied, never
 put into Nix. ROA tables live in `/var/lib/dn42-roa`.
@@ -81,43 +72,18 @@ nixpkgs tracks `nixos-unstable`, but is locked to `0541f33` (nixos-unstable-smal
 and fails to build (meson `mimalloc` option). A plain `nix flake update` is fine once
 nixos-unstable has moved past that commit.
 
-## Moving from Arch to `/dev/sdb`
+## History: the move from Arch
 
-Done on 2026-10-19. The cutover on 2026-10-17 did not stick: the VM came back up in
-Arch, which kept serving for two days. NixOS was then booted by making the NixOS disk
-the only Proxmox boot disk (the NVRAM entries are gone; OVMF starts systemd-boot via
-the ESP's fallback `\EFI\BOOT\BOOTX64.EFI`), and Arch's newer trough database and
-slopd counters were copied over by hand. If a cutover is ever repeated, check that the
-first boot really is NixOS before treating Arch's state as frozen.
-
-To repeat it from the Arch install (as root, from this checkout; there the NixOS disk
-was `/dev/sdb`):
-
-1. Build `system.build.toplevel`, `system.build.diskoScript` and
-   `system.build.mountScript`. The disko script wipes `/dev/sdb` only and creates the
-   ESP and btrfs subvolumes, addressed by the partlabels `nixos-esp`/`nixos-root`
-   (Arch uses `ESP`/`root`; keep labels unique).
-2. `nixos-install --root /mnt --system <toplevel> --no-root-passwd --no-channel-copy`.
-   `canTouchEfiVariables` is off, so add the NVRAM entry by hand and keep Arch first:
-   `efibootmgr -c -d /dev/sdb -p 1 -L NixOS -l '\EFI\systemd\systemd-bootx64.efi'`,
-   then `efibootmgr -o <old order>`.
-3. `scripts/migrate-from-arch.sh /mnt` copies the state (repeatable, rsync):
-   `/home/slop`, `/root`, `/srv`, `/var/lib/{trough,slopd,mayfly,caddy,docker,containerd}`,
-   the journal and Caddy logs, `/etc/machine-id`, SSH host keys,
-   `/etc/trough-secrets.env`, `/etc/wireguard/dn42.{key,pub}`, the `nix profile`
-   closures with their GC roots, and a reference copy of Arch's `/etc`, `/usr/local`,
-   `/opt` and other logs in `/srv/arch`. Credential-bearing shell aliases belong in
-   `~/.bashrc.local` (Home Manager replaces `~/.bashrc` and keeps the old one as
-   `.bashrc.before-nixos`).
-4. `scripts/cutover-from-arch.sh <mountScript> <efibootmgr>` stops the stateful
-   services, runs the copy once more, and reboots into NixOS once (EFI BootNext). On
-   NixOS, `nixos-boot-check` makes the NixOS entry the default once IPv4 and IPv6 work;
-   without network for 10 minutes it boots Arch once more. A reset before that also
-   returns to Arch.
-
-Before the switch, the installed disk was booted in QEMU (OVMF, `snapshot=on`, isolated
-user-mode network, commands through the guest agent) with the copied state: no failed
-units, all sites served over HTTPS with the copied certificates, 45 DN42 tunnels and
-BIRD sessions configured, the docker images present, trough/slopd data identical.
+The server ran Arch Linux until October 2026. NixOS was installed with disko and
+`nixos-install` onto a second disk while Arch kept running; state (`/home/slop`,
+`/root`, `/srv`, `/var/lib/{trough,slopd,mayfly,caddy,docker,containerd}`,
+`/etc/machine-id`, SSH host keys, `/etc/trough-secrets.env`, `/etc/wireguard/dn42.*`,
+`nix profile` closures) was copied at the same paths, so service users keep Arch's
+UIDs/GIDs. The 2026-10-17 cutover (EFI BootNext) silently came back up in Arch, which
+served for two more days; NixOS took over on 2026-10-19, Arch's newer trough database
+and slopd counters were copied over, and the Arch disk was then removed. Lesson for
+any future move: confirm the first boot really is the new system before treating the
+old state as frozen. Arch's `/etc`, `/usr/local`, `/opt` and package list are kept in
+`/srv/arch` for reference; the migration scripts are in git history (commit `17307b2`).
 
 Operational notes for the live host are maintained in `/home/slop/CLAUDE.md`.

@@ -15,7 +15,6 @@
     ../../services/agent-tools.nix
     ./disko.nix
     ./hardware-configuration.nix
-    ./migration.nix
   ];
 
   # Renamed from `arch` with the move to NixOS.
@@ -26,6 +25,8 @@
 
   # Arch's `linux` package tracks the latest stable kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # A remote VM: reboot 30 s after a kernel panic instead of hanging.
+  boot.kernelParams = [ "panic=30" ];
 
   # DNS names: freifick.net + subdomains (Cloudflare, DNS-only), slop.kyouma.net
   systemd.network.networks."10-wan" = {
