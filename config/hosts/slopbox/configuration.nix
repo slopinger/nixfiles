@@ -9,6 +9,7 @@
     ../../services/trough.nix
     ../../services/slopbox.nix
     ../../services/driftline.nix
+    ../../services/hydra.nix
     ../../services/backups.nix
     ../../services/dn42
     ../../services/docker.nix

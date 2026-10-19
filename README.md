@@ -37,6 +37,7 @@ fetched from https://github.com/slopinger.
 | `trough.nix` | https://fedi.freifick.net, trough on 127.0.0.1:8790, `troughctl`, optional `/etc/trough-secrets.env`, week-long access log in `/var/log/caddy` |
 | `slopbox.nix` | https://slopbox.freifick.net (mayfly on 127.0.0.1:8791) and the `mayfly.` redirect |
 | `driftline.nix` | https://driftline.freifick.net static site with its CSP |
+| `hydra.nix` | https://hydra.freifick.net dev instance of our Hydra fork (`services.hydra-dev`, hydra-server on 127.0.0.1:3000, local Postgres, builds on this host), `hydractl` |
 | `backups.nix` | `slop-services-backup.timer`, daily verified trough/slopd archives in `/srv/backups/slop-services` |
 | `dn42/` | AS4242420125: dummy interface, BIRD 3, hourly ROA timer, 45 WireGuard peers (`peers.nix`), `dn42-auto-peer.service` |
 | `docker.nix` | Docker for test harnesses (journald logs, live restore) |

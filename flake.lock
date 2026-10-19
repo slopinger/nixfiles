@@ -106,6 +106,21 @@
         "url": "https://github.com/slopinger/driftline.git"
       }
     },
+    "flake-compat": {
+      "locked": {
+        "lastModified": 1761640442,
+        "narHash": "sha256-AtrEP6Jmdvrqiv4x2xa5mrtaIp3OEe8uBYCDZDS+hu8=",
+        "owner": "nix-community",
+        "repo": "flake-compat",
+        "rev": "4a56054d8ffc173222d09dad23adf4ba946c8884",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -142,6 +157,57 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "hydra": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "lix": "lix",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1792419794,
+        "narHash": "sha256-CZ6O1FDEi/ZGbWpbpCG0QYztcj2wom9pU+jV9uQv6rI=",
+        "ref": "refs/heads/main",
+        "rev": "e2abd940c97ae7e675fb63d6470b4cf413f5697d",
+        "revCount": 4404,
+        "type": "git",
+        "url": "https://github.com/slopinger/hydra.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/slopinger/hydra.git"
+      }
+    },
+    "lix": {
+      "inputs": {
+        "flake-compat": [
+          "hydra",
+          "flake-compat"
+        ],
+        "nix2container": "nix2container",
+        "nix_2_18": [
+          "hydra"
+        ],
+        "nixpkgs": [
+          "hydra",
+          "nixpkgs"
+        ],
+        "nixpkgs-regression": "nixpkgs-regression",
+        "pre-commit-hooks": "pre-commit-hooks"
+      },
+      "locked": {
+        "lastModified": 1787405345,
+        "narHash": "sha256-PqACplKGHZIWDgwv40PIZpU3eXX9fQiJ2lkhU1Kh7UA=",
+        "ref": "refs/heads/main",
+        "rev": "562630e26e4e459193a4769a16239d16084bca4a",
+        "revCount": 19501,
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/lix"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.lix.systems/lix-project/lix"
       }
     },
     "mayfly": {
@@ -185,7 +251,55 @@
         "type": "github"
       }
     },
+    "nix2container": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767195068,
+        "narHash": "sha256-+OMnL79ZjqM/PCz2hoQ12MnXNoSSfBGnsYBOZnA9XbI=",
+        "owner": "nlewo",
+        "repo": "nix2container",
+        "rev": "bb6801be998ba857a62c002cb77ece66b0a57298",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlewo",
+        "repo": "nix2container",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1787525875,
+        "narHash": "sha256-sKbMlkDCBVmAjUVT94LwhVtET/YEMtZaFdn5UduWxz8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a3b98866eecd08edac6e61a3081e69540a35020f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-regression": {
+      "locked": {
+        "lastModified": 1643052045,
+        "narHash": "sha256-uGJ0VXIhWKGXxkeNnq4TvV3CIOkUJ3PAoLZ3HMzNVMw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "215d4d0fd80ca5163643b03a33fde804a29cc1e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "215d4d0fd80ca5163643b03a33fde804a29cc1e2",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1792234340,
         "narHash": "sha256-QI3lSHgcDJ9iSXAHCrX2ES/3QZ+J/Of74pFI/Z+4abg=",
@@ -198,6 +312,22 @@
         "owner": "nixos",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pre-commit-hooks": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769939035,
+        "narHash": "sha256-Fok2AmefgVA0+eprw2NDwqKkPGEI5wvR+twiZagBvrg=",
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "rev": "a8ca480175326551d6c4121498316261cbb5b260",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
         "type": "github"
       }
     },
@@ -310,8 +440,9 @@
         "driftline": "driftline",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "hydra": "hydra",
         "mayfly": "mayfly",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "server-backups": "server-backups",
         "slop-landing": "slop-landing",
         "therapie-mcp": "therapie-mcp",

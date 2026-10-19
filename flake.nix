@@ -28,6 +28,7 @@
       [ "trough" "mayfly" "dn42" "driftline" "server-backups" ]
       (name: inputs.${name}.nixosModules.default) // {
         slopd = inputs.slop-landing.nixosModules.default;
+        hydra = inputs.hydra.nixosModules.hydra;
       };
 
     packages = sf.eachSystem (system: platform: let
@@ -89,6 +90,9 @@
       url = "git+https://github.com/slopinger/arbeitsagentur-mcp.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Soft fork of Lix's Hydra. No `follows`: its own lock keeps store paths equal to the
+    # hydra.kyouma.net builds, which cache.kyouma.net serves.
+    hydra.url = "git+https://github.com/slopinger/hydra.git";
     # freifick.net static site + slopd (guestbook/counter backend)
     slop-landing = {
       url = "git+https://github.com/slopinger/slop-landing.git";
