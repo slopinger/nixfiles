@@ -27,6 +27,11 @@ in {
     minimumDiskFree = 20;
     minimumDiskFreeEvaluator = 10;
   };
+  # The queue runner builds through `nix-store --serve` against the daemon, which only builds
+  # input-addressed derivations for trusted users. The module's `extra-trusted-users` line has no
+  # effect next to common/nix.nix's `trusted-users` on Lix 2.95, so list it here (hydra-www stays
+  # untrusted on purpose).
+  nix.settings.trusted-users = [ "hydra-queue-runner" ];
   environment.systemPackages = [ hydractl ];
 
   services.caddy.virtualHosts."hydra.freifick.net" = {
