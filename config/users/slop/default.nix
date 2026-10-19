@@ -84,6 +84,26 @@
     home.file.".ssh/allowed_signers".text = ''
       slopmoder@tutamail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOTofPAGRTdGiTl7oeIWupx4euhHVkR3TyPsECnq2fWJ
     '';
+    # Hydra instances for the `hydra` MCP server (github.com/slopinger/hydra-mcp). Only paths to
+    # the password files here; hydra-mcp reads them at login.
+    xdg.configFile."hydra-mcp/config.toml".text = ''
+      default = "kyouma"
+
+      # friend's Hydra that builds our fork (project slopinger-hydra), account slopinger
+      [instances.kyouma]
+      url = "https://hydra.kyouma.net"
+      username_file = "~/.secrets/hydra-kyouma/username"
+      password_file = "~/.secrets/hydra-kyouma/password"
+
+      # our dev instance (config/services/hydra.nix), admin slop
+      [instances.freifick]
+      url = "https://hydra.freifick.net"
+      username = "slop"
+      password_file = "~/.secrets/hydra/admin-password"
+
+      [instances.nixos]
+      url = "https://hydra.nixos.org"
+    '';
 
     programs.ssh = {
       enable = true;
