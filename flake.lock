@@ -166,11 +166,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1792427557,
-        "narHash": "sha256-Dp3d7Nydr8b7RArTABlpe7yu3rUbDH8DY9BAtgzc9vM=",
+        "lastModified": 1792429627,
+        "narHash": "sha256-lIpowWVa2ybgOAqox6sFFYPkZbyrJIWLv/tV767U194=",
         "ref": "refs/heads/main",
-        "rev": "530d79d860eee92b65c6829821855a360131b2fe",
-        "revCount": 4407,
+        "rev": "11e385704ddb56263b545b6c0ceeb8e8d69c3576",
+        "revCount": 4411,
         "type": "git",
         "url": "https://github.com/slopinger/hydra.git"
       },
