@@ -21,6 +21,7 @@ in {
     hydraURL = "https://hydra.freifick.net";
     listenHost = "127.0.0.1";
     port = 3000;
+    liveUpdates.enable = true;
     notificationSender = "hydra@freifick.net"; # no SMTP: emails are never sent
     # Builds run on this host through nix-daemon; fetch what caches already have.
     useSubstitutes = true;
@@ -38,8 +39,16 @@ in {
     logFormat = null;
     extraConfig = ''
       import security_headers
-      encode zstd gzip
-      reverse_proxy 127.0.0.1:${toString cfg.port}
+      @live path /_live/events /_live/log/*
+      handle @live {
+        reverse_proxy 127.0.0.1:${toString cfg.liveUpdates.port} {
+          flush_interval -1
+        }
+      }
+      handle {
+        encode zstd gzip
+        reverse_proxy 127.0.0.1:${toString cfg.port}
+      }
     '';
   };
 }
