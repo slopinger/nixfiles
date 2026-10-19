@@ -1,10 +1,12 @@
 # slop's NixOS infrastructure
 
 Declarative configuration for the freifick.net server (hostname `slopbox`), a
-Proxmox/QEMU UEFI VM. NixOS lives on the second disk `/dev/sdb` (stable by-id
-`scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`); the previous Arch Linux install stays on
-`/dev/sda` as a fallback and is mounted read-only at `/mnt/arch`. Never run disko
-against the Arch disk.
+Proxmox/QEMU UEFI VM. NixOS lives on the disk
+`/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1`; the previous Arch Linux install
+stays on `scsi-0QEMU_QEMU_HARDDISK_drive-scsi0` as a fallback and is mounted read-only
+at `/mnt/arch` when it is attached at boot. The `sdX` names are not stable: during the
+move from Arch the NixOS disk was `/dev/sdb`, now it is usually `/dev/sda`. Never run
+disko against the Arch disk.
 
 Source: https://github.com/slopinger/nixfiles. Application flake inputs are
 fetched from https://github.com/slopinger.
@@ -81,7 +83,15 @@ nixos-unstable has moved past that commit.
 
 ## Moving from Arch to `/dev/sdb`
 
-Done on 2026-10-17. To repeat it from the Arch install (as root, from this checkout):
+Done on 2026-10-19. The cutover on 2026-10-17 did not stick: the VM came back up in
+Arch, which kept serving for two days. NixOS was then booted by making the NixOS disk
+the only Proxmox boot disk (the NVRAM entries are gone; OVMF starts systemd-boot via
+the ESP's fallback `\EFI\BOOT\BOOTX64.EFI`), and Arch's newer trough database and
+slopd counters were copied over by hand. If a cutover is ever repeated, check that the
+first boot really is NixOS before treating Arch's state as frozen.
+
+To repeat it from the Arch install (as root, from this checkout; there the NixOS disk
+was `/dev/sdb`):
 
 1. Build `system.build.toplevel`, `system.build.diskoScript` and
    `system.build.mountScript`. The disko script wipes `/dev/sdb` only and creates the

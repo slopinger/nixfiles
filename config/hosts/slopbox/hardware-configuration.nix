@@ -6,7 +6,7 @@
   # Intel Xeon E5-2695 v2 (KVM, nested virtualisation available)
   boot.kernelModules = [ "kvm-intel" ];
 
-  # File systems come from disko.nix (btrfs root on /dev/sdb). No swap, as on Arch.
+  # File systems come from disko.nix (btrfs root on the scsi1 disk). No swap, as on Arch.
   boot.supportedFilesystems = [ "btrfs" ];
   services.btrfs.autoScrub = {
     enable = true;

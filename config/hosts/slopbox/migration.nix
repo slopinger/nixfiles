@@ -1,9 +1,9 @@
-# Move from the Arch install on /dev/sda (2026-10-17). Arch stays on its disk as a fallback.
+# Move from the Arch install on the scsi0 disk (2026-10-17, booted for good 2026-10-19). Arch stays on its disk as a fallback.
 # The first NixOS boot is a one-time EFI BootNext. nixos-boot-check makes NixOS the default
 # boot entry once IPv4 and IPv6 work, or boots Arch once more if they don't come up within
 # 10 minutes. Remove this file once Arch is no longer needed.
 { lib, pkgs, ... }: let
-  # sda1, the Arch ESP ("Linux Boot Manager" in NVRAM)
+  # The Arch ESP on scsi0 ("Linux Boot Manager" in NVRAM)
   archEspPartuuid = "a433e76f-140f-4583-810d-3b373764e200";
 in {
   # The NixOS entry in NVRAM is created by hand (efibootmgr, label "NixOS") and points at the
