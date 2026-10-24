@@ -511,11 +511,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792828849,
-        "narHash": "sha256-1uni0qnMa47JLzi/NSg+8t6r/WXAToSHxK/Lt+f273E=",
+        "lastModified": 1792830578,
+        "narHash": "sha256-zBa/CmwKvR5jJQs0PJ+53CMmYOSYv3cG5G7j/7RB+zg=",
         "ref": "refs/heads/main",
-        "rev": "d235fb96682246203f5937203d4fc61f832fd951",
-        "revCount": 63,
+        "rev": "4bcc95012c8355d2fa425cee0073660d6751a2f8",
+        "revCount": 67,
         "type": "git",
         "url": "https://github.com/slopinger/slop-landing.git"
       },
