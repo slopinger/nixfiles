@@ -36,6 +36,7 @@ fetched from https://github.com/slopinger.
 | `freifick-net.nix` | https://freifick.net (site from `slop-landing`), slopd on 127.0.0.1:8787, `slopctl`, www/slop.kyouma.net redirects |
 | `trough.nix` | https://fedi.freifick.net, trough on 127.0.0.1:8790, `troughctl`, optional `/etc/trough-secrets.env`, week-long access log in `/var/log/caddy` |
 | `slopbox.nix` | https://slopbox.freifick.net (mayfly on 127.0.0.1:8791) and the `mayfly.` redirect |
+| `boybrowse.nix` | https://boybrowse-sync.freifick.net, invite-only encrypted Perl sync on 127.0.0.1:8792; daily verified backups in `/var/lib/boybrowse-sync-backups` (30 days, same disk) |
 | `driftline.nix` | https://driftline.freifick.net static site with its CSP |
 | `hydra.nix` | https://hydra.freifick.net dev instance of our Hydra fork (`services.hydra-dev`, hydra-server on 127.0.0.1:3000, live event/log streams on 127.0.0.1:3002, local Postgres, builds on this host), `hydractl` |
 | `backups.nix` | `slop-services-backup.timer`, daily verified trough/slopd archives in `/srv/backups/slop-services` |

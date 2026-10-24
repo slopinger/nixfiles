@@ -20,6 +20,10 @@ Development lives on GitHub only (`git push origin main`).
 - Disk: 4 GiB ESP `nixos-esp` + btrfs `nixos-root` with subvolumes, created by disko (README).
   Test images need partlabels other than `nixos-esp`/`nixos-root`, or disko's by-partlabel
   paths hit the real disk.
+- Boybrowse sync: config/services/boybrowse.nix pins the application's module, loopback
+  port 8792, Caddy HTTPS and daily verified backups (30 days, same disk). Runtime state
+  is /var/lib/boybrowse-sync; backup directory /var/lib/boybrowse-sync-backups.
+  scripts/boybrowse-dns.py inspects only this service's A/AAAA records; --apply updates them.
 - Add DN42 peers to `config/services/dn42/peers.nix` and rebuild.
 - Verify after changes: `nix flake check --no-build`, build the toplevel.
 - nixpkgs is locked past the Lix build failure of nixos-unstable 2026-10-14 (README).

@@ -11,6 +11,7 @@
     ../../services/driftline.nix
     ../../services/hydra.nix
     ../../services/backups.nix
+    ../../services/boybrowse.nix
     ../../services/dn42
     ../../services/docker.nix
     ../../services/agent-tools.nix

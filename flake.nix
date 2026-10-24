@@ -25,7 +25,7 @@
     nixosModules = lib.genAttrs
       (builtins.attrNames (lib.filterAttrs (_: v: v == "directory") (builtins.readDir ./modules)))
       (mod: ./modules/${mod}) // lib.genAttrs
-      [ "trough" "mayfly" "dn42" "driftline" "server-backups" ]
+      [ "trough" "mayfly" "dn42" "driftline" "server-backups" "boybrowse" ]
       (name: inputs.${name}.nixosModules.default) // {
         slopd = inputs.slop-landing.nixosModules.default;
         hydra = inputs.hydra.nixosModules.hydra;
@@ -89,6 +89,9 @@
     arbeitsagentur-mcp = {
       url = "git+https://github.com/slopinger/arbeitsagentur-mcp.git";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    boybrowse = {
+      url = "git+https://github.com/slopinger/boybrowse.git";
     };
     # Soft fork of Lix's Hydra. No `follows`: its own lock keeps store paths equal to the
     # hydra.kyouma.net builds, which cache.kyouma.net serves.

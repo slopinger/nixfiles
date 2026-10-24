@@ -23,6 +23,24 @@
         "url": "https://github.com/slopinger/arbeitsagentur-mcp.git"
       }
     },
+    "boybrowse": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1792825081,
+        "narHash": "sha256-JOf45mSXQaqxOlHS9IIGQ0kUGqaxbZDrBmor3fvOh4c=",
+        "ref": "refs/heads/main",
+        "rev": "9f4148df358bae3196434b4503e7eb5b381de1dc",
+        "revCount": 2,
+        "type": "git",
+        "url": "https://github.com/slopinger/boybrowse.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/slopinger/boybrowse.git"
+      }
+    },
     "colmena": {
       "inputs": {
         "nix-github-actions": "nix-github-actions",
@@ -163,7 +181,7 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "lix": "lix",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1792500479,
@@ -269,17 +287,17 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1787525875,
-        "narHash": "sha256-sKbMlkDCBVmAjUVT94LwhVtET/YEMtZaFdn5UduWxz8=",
+        "lastModified": 1792788702,
+        "narHash": "sha256-aMvxykm8OsWvHaanWqruzTvODq0+HzBMKFXGF9UioSs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a3b98866eecd08edac6e61a3081e69540a35020f",
+        "rev": "832ed04d7eda63307ca21cedf4975780acc00eb9",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-26.05",
         "repo": "nixpkgs",
+        "rev": "832ed04d7eda63307ca21cedf4975780acc00eb9",
         "type": "github"
       }
     },
@@ -300,6 +318,22 @@
       }
     },
     "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1787525875,
+        "narHash": "sha256-sKbMlkDCBVmAjUVT94LwhVtET/YEMtZaFdn5UduWxz8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a3b98866eecd08edac6e61a3081e69540a35020f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1792234340,
         "narHash": "sha256-QI3lSHgcDJ9iSXAHCrX2ES/3QZ+J/Of74pFI/Z+4abg=",
@@ -434,6 +468,7 @@
     "root": {
       "inputs": {
         "arbeitsagentur-mcp": "arbeitsagentur-mcp",
+        "boybrowse": "boybrowse",
         "colmena": "colmena",
         "disko": "disko",
         "dn42": "dn42",
@@ -442,7 +477,7 @@
         "home-manager": "home-manager",
         "hydra": "hydra",
         "mayfly": "mayfly",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "server-backups": "server-backups",
         "slop-landing": "slop-landing",
         "therapie-mcp": "therapie-mcp",
